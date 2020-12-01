@@ -1,0 +1,28 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2>User info</h2>
+      <%= render 'users/info',  user: @user %>
+      <h2 class="mt-3">New book</h2>
+      <%= render 'form', book: @book %>
+    </div>
+    <div class='col-md-8 offset-md-1'>
+  		<h2>Book detail</h2>
+  		<table class='table'>
+  		  <tr>
+  		    <td><%= link_to user_path(@bookselected.user) do %>
+            <%= attachment_image_tag(@bookselected.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %><br>
+            <%= @bookselected.user.name %>
+            <% end %>
+          </td>
+          <td><%= link_to @bookselected.title, book_path(@bookselected) %></td>
+          <td><%= @bookselected.body %></td>
+          <% if @bookselected.user == current_user %>
+            <td><%= link_to 'Edit', edit_book_path(@bookselected), class: "btn btn-sm btn-success edit_book_#{@bookselected.id}" %></td>
+            <td><%= link_to 'Destroy', book_path(@bookselected), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@bookselected.id}"%></td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
