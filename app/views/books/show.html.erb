@@ -17,12 +17,29 @@
           </td>
           <td><%= link_to @bookselected.title, book_path(@bookselected) %></td>
           <td><%= @bookselected.body %></td>
+          <td>コメント件数：<%= @bookselected.comments.count %></td>
           <% if @bookselected.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@bookselected), class: "btn btn-sm btn-success edit_book_#{@bookselected.id}" %></td>
             <td><%= link_to 'Destroy', book_path(@bookselected), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@bookselected.id}"%></td>
           <% end %>
         </tr>
       </table>
+      <% @bookselected.comments.each do |comment| %>
+        <p><%= attachment_image_tag comment.user, :profile_image, :fill, 60, 60, fallback: "no-image-mini.jpg" %></p>
+        <%= link_to comment.user.name, user_path(comment.user.id) %>
+        <%= comment.comment %>
+        <% if comment.user == current_user %>
+      <div class="comment-delete">
+        <%= link_to "削除", book_comment_path(comment.book_id, comment.id), method: :delete %>
+      </div>
+        <% end %>
+      <% end %>
+      <div class="new-comment">
+      <%= form_with(model:[@bookselected, @comment], local: true) do |f| %>
+      <%= f.text_area :comment ,placeholder: "コメントをここに" %>
+      <%= f.submit "送信する" %>
+      <% end %>
+      </div>
     </div>
   </div>
 </div>
