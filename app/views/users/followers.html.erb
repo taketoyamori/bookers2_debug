@@ -1,3 +1,10 @@
+<h1>FollowUsers</h1>
+
+<% if @users.count == 0 %>
+
+  <p>ユーザーはいません</p>
+
+<% else %>
 <table class='table'>
   <thead>
     <tr>
@@ -7,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% users.each do |user| %>
+    <% @users.each do |user| %>
       <tr>
         <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
         <td><%= user.name %></td>
@@ -27,3 +34,4 @@
     <% end %>
   </tbody>
 </table>
+<% end %>

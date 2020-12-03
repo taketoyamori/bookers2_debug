@@ -1,0 +1,37 @@
+U - R - U
+
+
+has_many :active_relationships, class_name:"Relationship", foreign_key: :following_id, dependent: :destroy
+  has_many :followings, through: :active_relationships, source: :follower
+
+  has_many :passive_relationships, class_name:"Relationship", foreign_key: :follower_id, dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :following
+
+
+User.rb
+  # フォロされている人から見て
+  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'followee_id'
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+
+  # フォローしている人から見て
+  has_many :relationships, foreign_key: "follower_id"
+  has_many :folloings, through: :relationships, source: :followe
+
+
+ Relationship.rb
+   belongs_to :follower, class_name: "User" # フォロしている人を特定
+   belongs_to :followee, class_name: "User" # フォロされている人
+
+
+
+
+ ------------------------------------------------
+
+employer(経営者)
+employee(従業員)
+
+trainer(メンタ-)
+trainee(受講生)
+
+followee(フォロされてる人)
+follower(フォロしている人)
