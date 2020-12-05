@@ -1,0 +1,6 @@
+<%= form_with(model:[bookselected, comment], remote: true) do |f| %>
+  <div class="form-group">
+    <%= f.text_area :comment, class: "form-control form-control-lg" %>
+  </div>
+    <%= f.submit "送信する" %>
+<% end %>
